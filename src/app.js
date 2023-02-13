@@ -27,12 +27,10 @@ app.get("/products", async(req,res)=>{
 
 
 
+
 app.get("/products/:pid",(req,res)=>{
     const pid = req.params.pid
-    const product = manager.getProductById(pid)
-    if(!product){
-        return res.send({error: "Usuario No encontrado"})
-    } 
+    const product = manager.getProductById(parseInt(pid))
     res.send(product)
 })
 

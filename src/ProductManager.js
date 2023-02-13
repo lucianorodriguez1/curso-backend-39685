@@ -45,8 +45,7 @@ class ProductManager{
         }else{
             const newProduct = {...product}
             data.push(newProduct);
-            await fs.writeFile(this.path, JSON.stringify(data), "utf-8")
-            return console.log(`The product with the id ${product.code} has been added`);
+            await fs.writeFile(this.path, JSON.stringify(data), "utf-8");
         }
     }
 
@@ -55,9 +54,7 @@ class ProductManager{
     getProducts = async (id)=>{
         const read = await fs.readFile(this.path, 'utf-8');
         const data = JSON.parse(read);
-
         if(data.length != 0){
-            console.log("List the products");
             return data ;
         } else{
             console.log("Not found product");
@@ -68,11 +65,7 @@ class ProductManager{
         const read = await fs.readFile(this.path, 'utf-8');
         const data = JSON.parse(read);
         const findProduct = data.find((prod) => prod.id === id);
-        if (!findProduct) {
-            return console.log("Product Not found");
-        } else {
-           return findProduct
-        }
+        return findProduct
     }
 
 
@@ -199,7 +192,7 @@ const test = async()=>{
     //creo archivo de ruta
     await fs.writeFile(ruta,"[]")
     // el array de productos debe estar vacio
-    await productManager.getProducts()
+    // await productManager.getProducts()
     //agrego productos
     await productManager.addProduct(product1)
     await productManager.addProduct(product2)
