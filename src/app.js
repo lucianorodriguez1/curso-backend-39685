@@ -28,9 +28,11 @@ app.get("/products", async(req,res)=>{
 
 
 
-app.get("/products/:pid",(req,res)=>{
-    const pid = req.params.pid
-    const product = manager.getProductById(parseInt(pid))
+app.get("/products/:pid",async(req,res)=>{
+    const product = await manager.getProductById(parseInt(req.params.pid))
+    if(!product){
+        res.send("Usuario no encontrado")
+    }
     res.send(product)
 })
 
