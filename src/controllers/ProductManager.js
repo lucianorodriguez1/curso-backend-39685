@@ -1,5 +1,5 @@
 import {promises as fs} from "fs";
-const ruta ="./src/products.txt"
+const ruta = "./src/models/products.txt"
 
 
 class Product{
@@ -23,14 +23,14 @@ class Product{
     }
 }
 
-class ProductManager{
+ export class ProductManager{
     constructor(path){
         this.path = path;
     }
 
     checkArchivo = ()=>{
         return fs.existsSync(this.path)       
-    }
+    } 
 
     addProduct = async(product)=>{
         const read = await fs.readFile(this.path, "utf-8")
@@ -223,4 +223,3 @@ const test = async()=>{
 test()
 
 
-export default ProductManager;
