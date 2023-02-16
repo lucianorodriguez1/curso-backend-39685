@@ -2,10 +2,10 @@ import {Router} from "express"
 import { ProductManager } from "../controllers/ProductManager.js"
 
 const routerProduct = Router()
-const manager = new ProductManager("./models/products.txt")
+const manager = new ProductManager("./src/models/products.txt")
 
 
-routerProduct.get("/products", async(req,res)=>{
+routerProduct.get("/", async(req,res)=>{
     const products = await manager.getProducts();
     let { limit } = req.query;
     let data;
@@ -20,7 +20,7 @@ routerProduct.get("/products", async(req,res)=>{
 
 
 
-routerProduct.get("/products/:pid",async(req,res)=>{
+routerProduct.get("/:pid",async(req,res)=>{
     const product = await manager.getProductById(parseInt(req.params.pid))
     if(!product){
         res.send("Usuario no encontrado")
@@ -30,12 +30,10 @@ routerProduct.get("/products/:pid",async(req,res)=>{
 
 //esta mal el indice autoincrementable
 //con el metodo get en postman no me aparece el producto que agregue, pero en la consola si me aparece
-routerProduct.post("/products", async(req,res)=>{
-    const products = await manager.getProducts();
-    let {title, description, price, thumbnail, code, stock} = req.body;
-    const indice = products.length;
-    products.push({title:title, description:description, price:price, thumbnail:thumbnail, code:code, stock:stock, id:indice+1});
-    res.send("Usuario Creado");
+routerProduct.post("/", async(req,res)=>{
+    const productAdd = await manager.addProduct(req.body);
+    res.send(productAdd)
+
 })
 
 //cuando actualizo en postman me aparece error en la consola y no se guarda

@@ -10,9 +10,18 @@ class Product{
         this.thumbnail = thumbnail;
         this.code = code;
         this.stock = stock
-        this.id = Product.addId()
     }
 
+    
+}
+
+
+ export class ProductManager{
+    constructor(path){
+        this.path = path;
+    }
+
+    
     static addId(){
         if(this.idIncrement){
             this.idIncrement++
@@ -21,44 +30,30 @@ class Product{
         }
         return this.idIncrement
     }
-}
-
- export class ProductManager{
-    constructor(path){
-        this.path = path;
-    }
 
     checkArchivo = ()=>{
         return fs.existsSync(this.path)       
     } 
 
     addProduct = async(product)=>{
-        const read = await fs.readFile(this.path, "utf-8")
-        const data = JSON.parse(read);
-        const productCode = data.map((prod)=>prod.code)
-        const productExists = productCode.includes(product.code)
+        const prods = JSON.parse(await fs.readFile(this.path,"utf-8"))
+        product.id = ProductManager.addId()
+        prods.push(product)
+        await fs.writeFile(this.path, JSON.stringify(prods))
+        return "Product created"
 
-        if(productExists){
-            return console.log(`The product with the code ${product.code} already exists`);
-        }else if (Object.values(product).includes("")){
-            return console.log("All fields must be completed");
-        }else{
-            const newProduct = {...product}
-            data.push(newProduct);
-            await fs.writeFile(this.path, JSON.stringify(data), "utf-8");
-        }
     }
 
 
 
-    getProducts = async (id)=>{
-        const read = await fs.readFile(this.path, 'utf-8');
-        const data = JSON.parse(read);
-        if(data.length != 0){
-            return data ;
-        } else{
-            console.log("Not found product");
+    async getProducts() {
+        try{
+            const prods = JSON.parse(await fs.readFile(this.path,"utf-8"))
+            return prods
+        }catch(error){
+            return error
         }
+        
     }
 
     getProductById = async (id) => {
