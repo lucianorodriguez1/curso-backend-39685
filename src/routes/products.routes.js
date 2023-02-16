@@ -28,43 +28,24 @@ routerProduct.get("/:pid",async(req,res)=>{
     res.send(product)
 })
 
-//esta mal el indice autoincrementable
-//con el metodo get en postman no me aparece el producto que agregue, pero en la consola si me aparece
+
 routerProduct.post("/", async(req,res)=>{
     const productAdd = await manager.addProduct(req.body);
     res.send(productAdd)
-
 })
 
-//cuando actualizo en postman me aparece error en la consola y no se guarda
-routerProduct.put("/products/:pid", async(req,res)=>{
-    const products = await manager.getProducts();
-    let {title, description, price, thumbnail, code, stock} = req.body;
-
-    if(products.some(p=>p.id=== parseInt(req.params.pid))){
-        const indice = products.findIndex(p=>p.id === parseInt(req.params.pid))
-        products[indice].title = title;
-        products[indice].description = description;
-        products[indice].price = price;
-        products[indice].thumbnail = thumbnail;
-        products[indice].code = code;
-        products[indice].stock = stock;
-
-        res.send("Usuario actualizado")
-   }
-   res.send("Usuario no encontrado")
-})
-
-// me aparece el mismo error que arriba
-routerProduct.delete("/products/:pid",async(req,res)=>{
-    const product = await manager.getProducts();
-    const indice = product.findIndex(p=>p.id === parseInt(req.params.pid));
-    if(indice != -1){
-        product.splice(indice,1)
-        res.send("Usuario Elimiando")
-    }
+routerProduct.delete("/:pid",async(req,res)=>{
+    const product = await manager.deleteProduct(req.params.pid);
     res.send(product)
 })
+
+routerProduct.put("/:pid", async(req,res)=>{
+    let product = await manager.updateProduct(req.params.pid, req.body)
+   res.send(product)
+})
+
+
+
 
 
 export default routerProduct;

@@ -31,11 +31,8 @@ class Product{
         return this.idIncrement
     }
 
-    checkArchivo = ()=>{
-        return fs.existsSync(this.path)       
-    } 
 
-    addProduct = async(product)=>{
+    async addProduct (product){
         const prods = JSON.parse(await fs.readFile(this.path,"utf-8"))
         product.id = ProductManager.addId()
         prods.push(product)
@@ -56,37 +53,49 @@ class Product{
         
     }
 
-    getProductById = async (id) => {
-        const read = await fs.readFile(this.path, 'utf-8');
-        const data = JSON.parse(read);
-        const findProduct = data.find((prod) => prod.id === id);
-        return findProduct
+    async getProductById(id){
+        const prods = JSON.parse(await fs.readFile(this.path, "utf-8"));
+        if(prods.some(prod=>prod.id === parseInt(id))){
+            return prods.find(prod => prod.id === parseInt(id))
+        }else{
+            return "Producto no encontrado"
+        }
     }
 
+    
 
-    updateProduct = async (id, entry, value)=>{
-        const read = await fs.readFile(this.path, "utf-8");
-        const data = JSON.parse(read);
-        const index = data.findIndex((product) => product.id === id);
-        if(!data[index][entry]){
-            return console.log("The product could not be updated");
+    async updateProduct(id,{title,description,price,thumbnail,code,stock}){
+        const prods = JSON.parse(await fs.readFile(this.path, "utf-8"));
+        if(prods.some(prod=>prod.id === parseInt(id))){
+            let index = prods.findIndex(prod=>prod.id ===parseInt(id))
+            prods[index].title = title
+            prods[index].description = description
+            prods[index].price = price
+            prods[index].thumbnail = thumbnail
+            prods[index].code = code
+            prods[index].stock = stock
+            await fs.writeFile(this.path, JSON.stringify(prods))
+            return "Producto actualizado"
         } else {
-            data[index][entry]= value;
-            await fs.writeFile(this.path, JSON.stringify(data, null,2))
-            return console.log("The product was modified: " + data[index]);
+            return "Producto no encontrado"
         }
     }
 
 
-    deleteProduct = async (id) => {
-        const read = await fs.readFile(this.path, "utf-8")
-        const data = JSON.parse(read)
-        const productRemove = JSON.stringify(data.find((product) => product.id === id))
-        const newData = data.filter((product)=> product.id !== id)
 
-        await fs.writeFile(this.path, JSON.stringify(newData), "utf-8")
-        return console.log("Not found ID");
+    async deleteProduct(id){
+        const prods = JSON.parse(await fs.readFile(this.path,"utf-8"))
+        if(prods.some(prod=> prod.id === parseInt(id))){
+            const prodsFiltrados = prods.filter(prod=>prod.id !== parseInt(id))
+            await fs.writeFile(this.path, JSON.stringify(prodsFiltrados))
+            return "Producto Eliminado"
+        }else{
+            return "Producto no encontrado"
+        }
     }
+
+
+    
 }
 
 
