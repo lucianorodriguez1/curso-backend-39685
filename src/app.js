@@ -1,5 +1,6 @@
 import express from "express"
 import routerProduct from "./routes/products.routes.js"
+import routerCart from "./routes/cart.routes.js"
 import { __dirname } from "./path.js"
 import multer from "multer"
 
@@ -17,10 +18,6 @@ app.use(express.json())
 //multer
 
 
-
-
-
-
 const storage = multer.diskStorage({
     destination:(req,file,cb)=>{
         cb(null,"src/public/img")
@@ -29,13 +26,16 @@ const storage = multer.diskStorage({
         cb(null, `${file.originalname}`)
     }
 })
+
 const upload = multer({storage:storage})
+
 app.post("/upload",upload.single("product"),(req,res)=>{
     console.log(req.body);
     res.send("Imagen cargada")
 })
 //Routes
 app.use("/api/products", routerProduct)
+app.use("/api/carts", routerCart)
 app.use("/static", express.static(__dirname + "/public"))
 
 
