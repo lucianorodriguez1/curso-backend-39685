@@ -42,7 +42,7 @@ export class CartManager{
 
 
 
-    async getProductById(idCart){
+    async getCartById(idCart){
         this.checkText()
         try{
             const read = JSON.parse(await fs.readFile(this.path, "utf-8"));
