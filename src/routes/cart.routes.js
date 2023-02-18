@@ -10,8 +10,8 @@ const managerProduct = new ProductManager("./src/models/products.txt")
 
 
 routerCart.post("/", async(req,res)=>{
-    const productAdd = await managerCart.addCart()
-    res.send(productAdd)
+    let product = await managerCart.addCart();
+    res.send({product})
 })
 
 routerCart.get("/:cid", async(req,res)=>{

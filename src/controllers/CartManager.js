@@ -26,7 +26,7 @@ export class CartManager{
 
     async addCart(){
         this.checkText()
-        try{
+        // try{
             const read = JSON.parse(await fs.readFile(this.path,"utf-8"));
             let newId;
             read.length > 0 ? newId = read[read.length -1].id + 1: newId = 1;
@@ -34,9 +34,9 @@ export class CartManager{
             read.push(newCart)
             await fs.writeFile(this.path, JSON.stringify(read))
             return newId
-        }catch(error){
-            return "Hubo un error al agregar el carrito"
-        }
+        // }catch{
+        //     return "Hubo un error al agregar el carrito"
+        // }
         
     }
 
@@ -54,7 +54,7 @@ export class CartManager{
                 return "Carrito con id puesto no encontrado"
             }
 
-        }catch(error){
+        }catch{
             return "No se encontró ningún carrito"
         }
         
