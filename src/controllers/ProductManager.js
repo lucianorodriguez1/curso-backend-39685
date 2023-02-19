@@ -2,6 +2,7 @@ import {promises as fs} from "fs";
 const ruta = "./src/models/products.txt"
 
 
+
 class Product{
     constructor(title, description, code, price, stock,category,thumbnail){
         this.title = title;
@@ -11,10 +12,9 @@ class Product{
         this.stock = stock;
         this.category = category;
         this.thumbnail = thumbnail;
-        
-       
     }
 }
+
 
 
 export class ProductManager{
@@ -42,7 +42,6 @@ export class ProductManager{
         return "Product created"
 
     }
-
 
 
     async getProducts() {

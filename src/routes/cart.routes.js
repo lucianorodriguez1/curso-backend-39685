@@ -13,13 +13,11 @@ routerCart.post("/", async(req,res)=>{
     let product = await managerCart.addCart();
     res.send({product})
 })
-
+ 
 routerCart.get("/:cid", async(req,res)=>{
     let cart = await managerCart.getCartById(parseInt(req.params.cid))
     res.send(cart)
 })
-
-
 
 
 routerCart.post("/:cid/product/:pid", async(req,res)=>{
