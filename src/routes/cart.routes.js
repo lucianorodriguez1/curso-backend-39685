@@ -1,4 +1,4 @@
-import {Router} from "express"
+import {Router} from "express" 
 import {CartManager} from "../controllers/CartManager.js"
 import { ProductManager } from "../controllers/ProductManager.js"
 
@@ -32,5 +32,20 @@ routerCart.post("/:cid/product/:pid", async(req,res)=>{
     }
 })
 
+routerCart.delete('/:cid', async (req, res) => {
+    let mensaje = await managerCart.deleteCart(req.params.cid) 
+    res.send(mensaje)
+})
+
+routerCart.delete('/:cid/product/:pid', async (req, res) => { 
+    const cartData = await managerCart.getCartById(parseInt(req.params.cid));
+    if (cartData) {
+        const data = await managerCart.deleteProductFromCart(parseInt(req.params.cid), parseInt(req.params.pid))
+        data ? res.send(`Producto ${req.params.pid} eliminado del carrito.`) : res.send(`Hubo un error al eliminar el producto del carrito.`)
+    } else {
+        res.send(`El producto ${req.params.pid} no se ha encontrado.`)
+    }
+    
+})
 
 export default routerCart

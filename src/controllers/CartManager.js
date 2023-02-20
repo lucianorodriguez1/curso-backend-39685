@@ -2,7 +2,7 @@ import {existsSync,promises as fs} from "fs";
 
 class Cart {
     constructor(id, products) {
-        this.id = id;
+        this.id = id; 
         this.products = products;
     }
 }
@@ -86,5 +86,44 @@ export class CartManager{
     }
 
 
+
+    async deleteCart(id){
+        const carts = JSON.parse(await fs.readFile(this.path, 'utf-8'))
+        if(carts.some(cart => cart.id === parseInt(id))) {
+            const cartsFiltrados = carts.filter(cart => cart.id !== parseInt(id))
+            await fs.writeFile(this.path, JSON.stringify(cartsFiltrados))
+            return "Carrito eliminado"
+        } else {
+            return "Carrito no encontrado"
+        }
+    }
+
+
+    async deleteProductFromCart(idCart, idProduct){
+        this.checkText()
+        const carts = JSON.parse(await fs.readFile(this.path, 'utf-8'))
+        //Chequeamos que el carrito existe con ese id.
+        if(carts.some(cart => cart.id === parseInt(idCart))) {
+            //Obtenemos el índice del array de carritos
+            const cartIndex = carts.findIndex(cart => cart.id === parseInt(idCart))
+            //Obtenemos el índice del prdoucto dentro del carrito
+            const objetoCarrito = new Cart(idCart, carts[cartIndex].products)
+            const prodIndex = objetoCarrito.products.findIndex(obj => obj.product === parseInt(idProduct))
+            if(prodIndex !== -1) {
+                //Si existe eliminamos el producto del carrito
+                const prodsFiltrados = objetoCarrito.products.filter(obj => obj.product !== parseInt(idProduct))
+                //Actualizamos el carrito en el array de carritos
+                objetoCarrito.products = prodsFiltrados;
+                carts[cartIndex] = objetoCarrito;
+            } else {
+                return "El producto no existe en el carrito y no pudo ser eliminado."
+            }
+            //Escribimos el Json del carrito con el producto nuevo
+            await fs.writeFile(this.path, JSON.stringify(carts), 'utf-8')
+            return "Producto eliminado del carrito"
+        } else {
+            return "Hubo un error al eliminar el producto del carrito."
+        }
+    }
 
 }

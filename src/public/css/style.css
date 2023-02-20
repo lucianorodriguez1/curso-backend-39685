@@ -1,0 +1,20 @@
+/*  home.handlebars */
+.title-home{
+    text-align: center;
+}
+.container-card-home{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;
+    margin: 50px 30px;
+}
+.card-home{
+    width: 200px;
+    margin: 30px;
+}
+.card-home img{
+    width: 100%;
+}
+
+/* vista  realtimeproducts*/

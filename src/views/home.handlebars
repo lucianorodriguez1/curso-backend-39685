@@ -1,1 +1,13 @@
-<h1>Hola {{mensaje}} </h1>
+<h1 class="title-home">Products added so far</h1>
+
+<div id="addproductshome" class="container-card-home">
+    {{#each products}}
+        <div class="card-home">
+            <img  src="{{this.thumbnail}}">
+            <h5>{{this.title}}</h5>
+            <p>Descriptión:{{this.description}} </p>
+            <p>Precio: {{this.price}} </p>       
+            <p>Stock: {{this.stock}} </p>   
+        </div>
+    {{/each}}
+</div>  

@@ -6,6 +6,7 @@ import multer from "multer"
 import {engine} from "express-handlebars"
 import * as path from "path"
 import { Server } from "socket.io"
+import routerSocket from "./routes/socket.routes.js"
 
 const app = express()
 const PORT = 8080 
@@ -24,19 +25,8 @@ app.engine("handlebars", engine());
 app.set("view engine", "handlebars");
 app.set("views",  path.resolve(__dirname ,"./views"))
 
-//server de socket io
-const io = new Server(server)
 
-io.on("connection", (socket)=>{  //io.on es cuando establezco la conexion
-    console.log("Cliente conectado");
 
-    socket.on("mensaje",info=>{  //cuando recibo informacion de mi cliente
-        console.log(info);
-    })
-
-    socket.emit("Mensaje general", "Hola desde mensaje general")
-    socket. broadcast.emit("Mensaje-socket-propio", "Hola desde mensaje socket propio")//envio un mensaje a todos los clientes conmectado a los otros sockets menos a los que estan conectado a este socket
-})
 //multer
 const storage = multer.diskStorage({
     destination:(req,file,cb)=>{
@@ -54,10 +44,21 @@ app.post("/upload",upload.single("product"),(req,res)=>{
     res.send("Imagen cargada")
 })
 
+
+
+
 //Routes
 app.use("/api/products", routerProduct)
 app.use("/api/carts", routerCart)
+app.use("/", routerSocket)
 app.use("/", express.static(__dirname + "/public"))
+
+
+
+//server de socket io
+const io = new Server(server)
+
+
 //routes-handlebars
 app.get("/", (req,res)=>{
     res.render("home", {

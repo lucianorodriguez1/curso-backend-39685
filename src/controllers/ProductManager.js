@@ -2,7 +2,7 @@ import {promises as fs} from "fs";
 const ruta = "./src/models/products.txt"
 
 
-
+ 
 class Product{
     constructor(title, description, code, price, stock,category,thumbnail){
         this.title = title;
@@ -109,7 +109,7 @@ const product1 = new Product(
     108239,
     233,
     "placa de video",
-    "./public/img/1050ti.jfif",
+    "./img/1050ti.jfif",
 )
 
 const product2 = new Product(
@@ -119,7 +119,7 @@ const product2 = new Product(
     184064,
     934,
     "placa de video",
-    "./public/img/rtx2060super.webp",
+    "./img/rtx2060super.webp",
 )
 
 const product3= new Product(
@@ -129,7 +129,7 @@ const product3= new Product(
     130589,
     91,
     "placa de video",
-    "./public/img/gtx1660.jpeg",
+    "./img/gtx1660.jpeg",
     
    
 )
@@ -141,7 +141,7 @@ const product4 = new Product(
     410304,
     40,
     "placa de video",
-    "./public/img/rtx3090.webp"
+    "./img/rtx3090.webp"
 )
 const product5 = new Product(
     "RTX 2070 SUPER",
@@ -150,7 +150,7 @@ const product5 = new Product(
     178586,
     975,
     "placa de video",
-    "./public/img/2070super.webp",
+    "./img/2070super.webp",
 )
  
 
@@ -161,7 +161,7 @@ const product6 = new Product(
     114766,
     20,
     "placa de video",
-    "./public/img/1060super.png",
+    "./img/1060super.png",
 )
     
     
@@ -173,7 +173,7 @@ const product7 = new Product(
     240569,
     60,
     "placa de video",
-    "./public/img/rtx3060.webp",
+    "./img/rtx3060.webp",
 )
 
 const product8 = new Product(
@@ -183,7 +183,7 @@ const product8 = new Product(
     290099,
     249,
     "placa de video",
-    "./public/img/rtx3060.webp",
+    "./img/rtx3060.webp",
     
     
 )
@@ -195,7 +195,7 @@ const product9 = new Product(
     50005,
     5004,
     "placa de video",
-    "./public/img/gtx680.webp",    
+    "./img/gtx680.webp",    
 )
 
 const product10 = new Product(
@@ -205,7 +205,7 @@ const product10 = new Product(
     204033,
     304,
     "placa de video",
-    "./public/img/rtx2080ti.webp",
+    "./img/rtx2080ti.webp",
     
    
 )
