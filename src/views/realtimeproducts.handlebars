@@ -1,0 +1,53 @@
+
+{{!-- formulario para crear productos --}}
+<form>
+    <h3>Crear un nuevo Producto</h3>
+    <ul>
+        <li>
+            <label for="title-addproduct">Title:</label>
+            <input type="text" id="title-addproduct" name="title-product" required>
+        </li>
+        <li>
+            <label for="img-addproduct">Imagen:</label>
+            <input type="text" id="img-addproduct" name="img-product" required>
+        </li>
+        <li>
+            <label for="description-addproduct">Descripción:</label>
+            <input type="text" id="description-addproduct" name="description-product" required>
+        </li>
+        <li>
+            <label for="price-addproduct">Precio:</label>
+            <input type="text" id="price-addproduct" name="price-product" required>
+        </li>
+        
+        <li>
+            <label for="stock-addproduct">Stock:</label>
+            <input type="text" id="stock-addproduct" name="stock-product" required>
+        </li>
+        <li>
+            <label for="category-addproduct">Category:</label>
+            <input type="text" id="code-addproduct" name="category-product" required>
+        </li>
+        <li>
+            <label for="code-addproduct">Code:</label>
+            <input type="text" id="code-addproduct" name="code-product" required>
+        </li>
+        <button type="submit" id="button-add-product">Add product</button>
+    </ul>
+</form>
+{{!-- agregar a los productos creados id autoincremnetable y status --}}
+
+
+{{!-- cards con los productos creados y los productos que cree el usuario se pondran aqui --}}
+{{!-- cada card contara con un boton con la opcion de eliminar el producto --}}
+
+<div>
+    <h2 class="title-home">Product list in real time</h2>
+    <div id="add-product-in-conatiner"  class="container-card-home">
+
+         
+    </div>
+</div>
+
+
+

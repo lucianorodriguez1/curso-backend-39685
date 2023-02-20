@@ -7,6 +7,7 @@ import {engine} from "express-handlebars"
 import * as path from "path"
 import { Server } from "socket.io"
 import routerSocket from "./routes/socket.routes.js"
+import { ProductManager } from "./controllers/ProductManager.js"
 
 const app = express()
 const PORT = 8080 
@@ -54,15 +55,18 @@ app.use("/", routerSocket)
 app.use("/", express.static(__dirname + "/public"))
 
 
-
+const productManager= new ProductManager("src/models/products.txt")
 //server de socket io
 const io = new Server(server)
 
 
-//routes-handlebars
-app.get("/", (req,res)=>{
-    res.render("home", {
-        mensaje:"Luciano"
-    })
-})
+io.on("connection", async socket=>{
+    console.log("Nuevo cliente conectado")
 
+    socket.on("addProduct-socket", async addproduct=>{
+        console.log(addproduct)
+        await productManager.addProduct(addproduct)
+    })
+
+    socket.emit("getProducts-socket", await productManager.getProducts())
+})
