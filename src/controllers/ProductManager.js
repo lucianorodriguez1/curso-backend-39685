@@ -23,7 +23,7 @@ export class ProductManager{
         this.path = path;
     }
 
-    
+
     static addId(){
         if(this.idIncrement){
             this.idIncrement++
@@ -34,13 +34,17 @@ export class ProductManager{
     }
 
     async addProduct(product){
+
+
+
         let i = 0;
         let totalFields = 8;
         for (const campo in product){
             i++
         }
+
         if(i===totalFields){
-            if(product.status === true && product.category.length > 0 && product.title.length > 0 && product.description.length > 0 && product.price.length > 0 && product.code.length > 0 && product.stock.length > 0){
+            if(product.status === true && product.category.length > 0 && product.title.length > 0 && product.description.length > 0 && toString(product.price).length > 0 && product.code.length > 0 && toString(product.stock).length > 0){
                 const prods = JSON.parse(await fs.readFile(this.path,"utf-8"))
                 const prodCode = prods.map((prod)=>prod.code)
                 const prodExist = prodCode.includes(product.code);
@@ -48,9 +52,9 @@ export class ProductManager{
                     return `El producto con el cógido ${product.code} ya existe`
                 }else{
                     const newProduct = {id:ProductManager.addId(),...product}
-                prods.push(newProduct)
-                await fs.writeFile(this.path, JSON.stringify(prods))
-                return "Product created"  ;
+                    prods.push(newProduct)
+                    await fs.writeFile(this.path, JSON.stringify(prods))
+                    return "Product created";
                 }
             }else{
                 return "No pueden tener los rangos vacios"
@@ -59,6 +63,9 @@ export class ProductManager{
         
             return `Falta completar los ${totalFields} campos requeridos.`
         }
+
+
+
     
     }
 
@@ -66,24 +73,6 @@ export class ProductManager{
 
 
 
-    // async addProduct (product){
-    //     const prods = JSON.parse(await fs.readFile(this.path,"utf-8"))
-    //     const prodCode = prods.map((prod)=>prod.code)
-    //     const prodExist = prodCode.includes(product.code);
-    //     if(prodExist){
-    //         return console.log(`El codigo ${product.code} ya existe. Ingrese otro codigo`);
-    
-    //     }else if(Object.values(product).includes("") || Object.values(product).includes(null)){
-    //         return console.log("Todos los campos deben ser completados");
-    //     }else{
-        
-    //         const newProduct = {id:ProductManager.addId(),...product}
-    //         prods.push(newProduct)
-    //         await fs.writeFile(this.path, JSON.stringify(prods))
-    //         return "Product created"  ;
-    //     }
-    
-    // }
     
 
     async getProducts() {
@@ -137,11 +126,13 @@ export class ProductManager{
             return "Producto no encontrado"
         }
     }
+
+
+
 }
 
 
 //inicio product manager
-const productManager = new ProductManager(ruta); 
 
 //lista de productos
 const product1 = new Product(
@@ -170,8 +161,8 @@ const product3= new Product(
     "GTX 1660 SUPER",
     "cuenta con 1408 núcleos, los cálculos para el procesamiento de gráficos se realizarán de forma simultánea logrando un resultado óptimo del trabajo de la placa. Esto le permitirá ejecutar lecturas dispersas y rápidas de y hacia la GPU.",
     "#323djv",
-    130589,
-    91,
+    "130589",
+    "91",
     "placa de video",
     "./img/gtx1660.jpeg",
     true,
@@ -261,6 +252,9 @@ const product10 = new Product(
     true,
    
 )
+
+
+const productManager = new ProductManager(ruta)
 
 const test = async()=>{
     //creo archivo de ruta
