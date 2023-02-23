@@ -15,7 +15,7 @@ routerSocket.get("/", async(req,res)=>{
 routerSocket.get("/realtimeproducts", async(req,res)=>{
     const products = await productManager.getProducts()
     res.render("realtimeproducts",{
-        
+        products
     })
 })
 

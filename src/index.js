@@ -55,6 +55,9 @@ app.use("/", routerSocket)
 app.use("/", express.static(__dirname + "/public"))
 
 
+
+
+
 const productManager= new ProductManager("src/models/products.txt")
 //server de socket io
 const io = new Server(server)
@@ -69,4 +72,10 @@ io.on("connection", async socket=>{
     })
 
     socket.emit("getProducts-socket", await productManager.getProducts())
+
+    socket.on("deleteProducts-socket", async deleteproduct=>{
+    
+        console.log(deleteproduct)
+        await productManager.deleteProduct(deleteproduct)
+    })
 })

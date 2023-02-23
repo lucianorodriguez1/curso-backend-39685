@@ -42,10 +42,18 @@ socket.on("getProducts-socket", products=>{
             <p>Stock: ${product.stock}</p>
             <p>Code: ${product.code}</p>
             <p>Status:true</p>
-            <button type="submit" id="button-delete-product">Borrar</button> 
+            <button type="submit" id="button-delete-product">Borrar</button>
         </div> 
         `
 
+    })
+    const buttonDeleteProduct = document.getElementById("button-delete-product")
+
+
+    buttonDeleteProduct.addEventListener("submit", (e)=>{
+    e.preventDefault();
+    const id = document.getElementById("id-product")
+    socket.emit("deleteProduct-socket", id)
     })
 
 })
@@ -60,10 +68,4 @@ socket.on("getProducts-socket", products=>{
 
 
 // borrar el producto
-const buttonDeleteProduct = document.getElementById("button-delete-product")
 
-buttonDeleteProduct.addEventListener("submit", (e)=>{
-    e.preventDefault();
-    const id = document.getElementById("id-product")
-    socket.emit("deleteProduct-socket", id)
-})

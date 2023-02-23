@@ -4,7 +4,7 @@ const ruta = "./src/models/products.txt"
 
  
 class Product{
-    constructor(title, description, code, price, stock,category,thumbnail){
+    constructor(title, description, code, price, stock,category,thumbnail,status){
         this.title = title;
         this.description = description;
         this.code = code;
@@ -12,6 +12,7 @@ class Product{
         this.stock = stock;
         this.category = category;
         this.thumbnail = thumbnail;
+        this.status = status;
     }
 }
 
@@ -35,14 +36,23 @@ export class ProductManager{
 
     async addProduct (product){
         const prods = JSON.parse(await fs.readFile(this.path,"utf-8"))
-        product.status = true;
-        product.id = ProductManager.addId()
-        prods.push(product)
-        await fs.writeFile(this.path, JSON.stringify(prods))
-        return "Product created"
-
+        const prodCode = prods.map((prod)=>prod.code)
+        const prodExist = prodCode.includes(product.code);
+        if(prodExist){
+            return console.log(`El codigo ${product.code} ya existe. Ingrese otro codigo`);
+    
+        }else if(Object.values(product).includes("") || Object.values(product).includes(null)){
+            return console.log("Todos los campos deben ser completados");
+        }else{
+        
+            const newProduct = {id:ProductManager.addId(),...product}
+            prods.push(newProduct)
+            await fs.writeFile(this.path, JSON.stringify(prods))
+            return "Product created"  ;
+        }
+    
     }
-
+    
 
     async getProducts() {
         try{
@@ -110,6 +120,7 @@ const product1 = new Product(
     233,
     "placa de video",
     "./img/1050ti.jfif",
+    "true",
 )
 
 const product2 = new Product(
@@ -120,6 +131,7 @@ const product2 = new Product(
     934,
     "placa de video",
     "./img/rtx2060super.webp",
+    "true",
 )
 
 const product3= new Product(
@@ -130,6 +142,7 @@ const product3= new Product(
     91,
     "placa de video",
     "./img/gtx1660.jpeg",
+    "true",
     
    
 )
@@ -141,7 +154,8 @@ const product4 = new Product(
     410304,
     40,
     "placa de video",
-    "./img/rtx3090.webp"
+    "./img/rtx3090.webp",
+    "true",
 )
 const product5 = new Product(
     "RTX 2070 SUPER",
@@ -151,6 +165,8 @@ const product5 = new Product(
     975,
     "placa de video",
     "./img/2070super.webp",
+    "true",
+    
 )
  
 
@@ -162,6 +178,7 @@ const product6 = new Product(
     20,
     "placa de video",
     "./img/1060super.png",
+    "true",
 )
     
     
@@ -174,6 +191,7 @@ const product7 = new Product(
     60,
     "placa de video",
     "./img/rtx3060.webp",
+    "true",
 )
 
 const product8 = new Product(
@@ -184,6 +202,7 @@ const product8 = new Product(
     249,
     "placa de video",
     "./img/rtx3060.webp",
+    "true",
     
     
 )
@@ -196,6 +215,7 @@ const product9 = new Product(
     5004,
     "placa de video",
     "./img/gtx680.webp",    
+    "true",
 )
 
 const product10 = new Product(
@@ -206,6 +226,7 @@ const product10 = new Product(
     304,
     "placa de video",
     "./img/rtx2080ti.webp",
+    "true",
     
    
 )
