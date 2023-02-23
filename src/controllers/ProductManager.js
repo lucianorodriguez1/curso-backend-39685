@@ -33,25 +33,57 @@ export class ProductManager{
         return this.idIncrement
     }
 
-
-    async addProduct (product){
-        const prods = JSON.parse(await fs.readFile(this.path,"utf-8"))
-        const prodCode = prods.map((prod)=>prod.code)
-        const prodExist = prodCode.includes(product.code);
-        if(prodExist){
-            return console.log(`El codigo ${product.code} ya existe. Ingrese otro codigo`);
-    
-        }else if(Object.values(product).includes("") || Object.values(product).includes(null)){
-            return console.log("Todos los campos deben ser completados");
+    async addProduct(product){
+        let i = 0;
+        let totalFields = 8;
+        for (const campo in product){
+            i++
+        }
+        if(i===totalFields){
+            if(product.status === true && product.category.length > 0 && product.title.length > 0 && product.description.length > 0 && product.price.length > 0 && product.code.length > 0 && product.stock.length > 0){
+                const prods = JSON.parse(await fs.readFile(this.path,"utf-8"))
+                const prodCode = prods.map((prod)=>prod.code)
+                const prodExist = prodCode.includes(product.code);
+                if(prodExist){
+                    return `El producto con el cógido ${product.code} ya existe`
+                }else{
+                    const newProduct = {id:ProductManager.addId(),...product}
+                prods.push(newProduct)
+                await fs.writeFile(this.path, JSON.stringify(prods))
+                return "Product created"  ;
+                }
+            }else{
+                return "No pueden tener los rangos vacios"
+            }
         }else{
         
-            const newProduct = {id:ProductManager.addId(),...product}
-            prods.push(newProduct)
-            await fs.writeFile(this.path, JSON.stringify(prods))
-            return "Product created"  ;
+            return `Falta completar los ${totalFields} campos requeridos.`
         }
     
     }
+
+
+
+
+
+    // async addProduct (product){
+    //     const prods = JSON.parse(await fs.readFile(this.path,"utf-8"))
+    //     const prodCode = prods.map((prod)=>prod.code)
+    //     const prodExist = prodCode.includes(product.code);
+    //     if(prodExist){
+    //         return console.log(`El codigo ${product.code} ya existe. Ingrese otro codigo`);
+    
+    //     }else if(Object.values(product).includes("") || Object.values(product).includes(null)){
+    //         return console.log("Todos los campos deben ser completados");
+    //     }else{
+        
+    //         const newProduct = {id:ProductManager.addId(),...product}
+    //         prods.push(newProduct)
+    //         await fs.writeFile(this.path, JSON.stringify(prods))
+    //         return "Product created"  ;
+    //     }
+    
+    // }
     
 
     async getProducts() {
@@ -120,7 +152,7 @@ const product1 = new Product(
     233,
     "placa de video",
     "./img/1050ti.jfif",
-    "true",
+    true,
 )
 
 const product2 = new Product(
@@ -131,7 +163,7 @@ const product2 = new Product(
     934,
     "placa de video",
     "./img/rtx2060super.webp",
-    "true",
+    true,
 )
 
 const product3= new Product(
@@ -142,7 +174,7 @@ const product3= new Product(
     91,
     "placa de video",
     "./img/gtx1660.jpeg",
-    "true",
+    true,
     
    
 )
@@ -155,7 +187,7 @@ const product4 = new Product(
     40,
     "placa de video",
     "./img/rtx3090.webp",
-    "true",
+    true,
 )
 const product5 = new Product(
     "RTX 2070 SUPER",
@@ -165,7 +197,7 @@ const product5 = new Product(
     975,
     "placa de video",
     "./img/2070super.webp",
-    "true",
+    true,
     
 )
  
@@ -178,7 +210,7 @@ const product6 = new Product(
     20,
     "placa de video",
     "./img/1060super.png",
-    "true",
+    true,
 )
     
     
@@ -191,7 +223,7 @@ const product7 = new Product(
     60,
     "placa de video",
     "./img/rtx3060.webp",
-    "true",
+    true,
 )
 
 const product8 = new Product(
@@ -202,7 +234,7 @@ const product8 = new Product(
     249,
     "placa de video",
     "./img/rtx3060.webp",
-    "true",
+    true,
     
     
 )
@@ -215,7 +247,7 @@ const product9 = new Product(
     5004,
     "placa de video",
     "./img/gtx680.webp",    
-    "true",
+    true,
 )
 
 const product10 = new Product(
@@ -226,17 +258,14 @@ const product10 = new Product(
     304,
     "placa de video",
     "./img/rtx2080ti.webp",
-    "true",
-    
+    true,
    
 )
 
 const test = async()=>{
     //creo archivo de ruta
     await fs.writeFile(ruta,"[]")
-    // el array de productos debe estar vacio
-    // await productManager.getProducts()
-    //agrego productos
+   
     await productManager.addProduct(product1)
     await productManager.addProduct(product2)
     await productManager.addProduct(product3)
@@ -247,22 +276,9 @@ const test = async()=>{
     await productManager.addProduct(product8)
     await productManager.addProduct(product9)
     await productManager.addProduct(product10)
-
-    //llamo a la funcion para ver los nuevos productos
-    await productManager.getProducts()
-    //Busco productos por ID.
-    // await productManager.getProductById(3)
-    // await productManager.getProductById(9)
-    //actualizo precio de un producto
-    // await productManager.updateProduct(2, "price", 195843)
-    //llamo a getproducts para ver la lista de productos con el producto 2 actualizado
-    // await productManager.getProducts()
-    //elimino el producto 3
-    // await productManager.deleteProduct(3)
-    //llamo a get products para ver nuevamente la lista de productos con el producto 3 eliminado
-    // await productManager.getProducts()
 }
 
 test()
+
 
 

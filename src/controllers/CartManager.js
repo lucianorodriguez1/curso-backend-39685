@@ -34,7 +34,6 @@ export class CartManager{
         }catch{
             return "Hubo un error al agregar el carrito"
         }
-        
     }
 
 
@@ -127,3 +126,5 @@ export class CartManager{
     }
 
 }
+
+
