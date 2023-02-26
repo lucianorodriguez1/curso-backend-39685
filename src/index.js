@@ -63,19 +63,23 @@ const productManager= new ProductManager("src/models/products.txt")
 const io = new Server(server)
 
 
+
+
+
+
 io.on("connection", async socket=>{
     console.log("Nuevo cliente conectado")
 
 
 
     socket.on("addProduct-socket", async product =>{
-        await productManager.addProduct(product)
         console.log(product);
+        const newProduct = {...product, status:true}
+        let mensajeAgregar = await productManager.addProduct(newProduct)
+        io.emit("mensajeproductoadd", mensajeAgregar)
+        console.log(mensajeAgregar);
     })
 
     socket.emit("getProducts-socket", await productManager.getProducts())
-
-
-    
   
 })

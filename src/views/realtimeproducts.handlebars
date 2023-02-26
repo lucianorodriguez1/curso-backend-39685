@@ -32,25 +32,20 @@
             <label for="code-addproduct">Code:</label>
             <input type="text" id="code-addproduct" name="code-product" required>
         </li>
-        <li>
-            <label for="code-addproduct">Status:</label>
-            <input type="text" id="status-addproduct" name="code-product" value="true" disabled>
-        </li>
         <button type="submit" id="button-add-product">Add product</button>
     </ul>
 </form>
-{{!-- agregar a los productos creados id autoincremnetable y status --}}
-
-
-{{!-- cards con los productos creados y los productos que cree el usuario se pondran aqui --}}
-{{!-- cada card contara con un boton con la opcion de eliminar el producto --}}
 
 <div>
     <h2 class="title-home">Product list in real time</h2>
-    <div id="add-product-in-conatiner"  class="container-card-home">
+    <div id="add-product-in-container"  class="container-card-home">
 
     </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.6.0/socket.io.min.js" integrity="sha512-uXal8CICQ52UxoF9A3yBP6GUXGu5N2IoTZf/YXGMW4M0AvNyViA0ZjpGf9uqRpkN4kyx41Y5I0DmTQNOS6G05A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="js/main.js"></script>
 </div>
+
 
 
 
