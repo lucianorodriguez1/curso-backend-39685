@@ -10,7 +10,7 @@ routerSocket.get("/", async(req,res)=>{
     res.render("home", { //renderiza el siguiente contenido
         products
     })
-})
+}) 
 
 routerSocket.get("/realtimeproducts", async(req,res)=>{
     const products = await productManager.getProducts()

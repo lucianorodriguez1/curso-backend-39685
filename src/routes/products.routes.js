@@ -16,7 +16,7 @@ routerProduct.get("/", async(req,res)=>{
     }
     res.send(data);
 })
-
+ 
 
 
 

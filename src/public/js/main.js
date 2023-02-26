@@ -1,24 +1,19 @@
 const socket = io() 
 
+const form = document.getElementById("form")
 
-//agregar el nuevo producto al listado
-const buttonAddProduct = document.getElementById("button-add-product");
+form.addEventListener("submit", ()=>{
 
-buttonAddProduct.addEventListener("submit",(e)=>{
-    
-    e.preventDefault();
+   const title = document.getElementById("title-addproduct").value;
+   const image = document.getElementById("img-addproduct").value;
+   const description = document.getElementById("description-addproduct").value;
+   const price = document.getElementById("price-addproduct").value;
+   const stock = document.getElementById("stock-addproduct").value;
+   const category = document.getElementById("category-addproduct").value;
+   const code = document.getElementById("code-addproduct").value;
+   const status = document.getElementById("status-addproduct").value;
 
-    const title = document.getElementById("title-addproduct").value;
-    const img = document.getElementById("img-addproduct").value;
-    const description = document.getElementById("description-addproduct").value;
-    const price = document.getElementById("price-addproduct").value;
-    const stock = document.getElementById("stock-addproduct").value;
-    const category = document.getElementById("category-addproduct").value;
-    const code = document.getElementById("code-addproduct").value;
-
-    const newProduct={title, img, description, price, stock, category, code}
-
-    socket.emit("addProduct-socket", newProduct)
+   socket.emit("addProduct-socket",{title, image, description,price,stock,category,code, status})
 })
 
 
@@ -26,6 +21,9 @@ buttonAddProduct.addEventListener("submit",(e)=>{
 
 
 
+
+
+//agrego los productos a la lista 
 socket.on("getProducts-socket", products=>{
 
     const addProductInContainer = document.getElementById("add-product-in-conatiner");
@@ -47,15 +45,6 @@ socket.on("getProducts-socket", products=>{
         `
 
     })
-    const buttonDeleteProduct = document.getElementById("button-delete-product")
-
-
-    buttonDeleteProduct.addEventListener("submit", (e)=>{
-    e.preventDefault();
-    const id = document.getElementById("id-product")
-    socket.emit("deleteProduct-socket", id)
-    })
-
 })
 
 

@@ -66,16 +66,16 @@ const io = new Server(server)
 io.on("connection", async socket=>{
     console.log("Nuevo cliente conectado")
 
-    socket.on("addProduct-socket", async addproduct=>{
-        console.log(addproduct)
-        await productManager.addProduct(addproduct)
+
+
+    socket.on("addProduct-socket", async product =>{
+        await productManager.addProduct(product)
+        console.log(product);
     })
 
     socket.emit("getProducts-socket", await productManager.getProducts())
 
-    socket.on("deleteProducts-socket", async deleteproduct=>{
+
     
-        console.log(deleteproduct)
-        await productManager.deleteProduct(deleteproduct)
-    })
+  
 })

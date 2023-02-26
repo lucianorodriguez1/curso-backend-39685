@@ -1,6 +1,6 @@
 
 {{!-- formulario para crear productos --}}
-<form>
+<form id="form">
     <h3>Crear un nuevo Producto</h3>
     <ul>
         <li>
@@ -8,15 +8,15 @@
             <input type="text" id="title-addproduct" name="title-product" required>
         </li>
         <li>
-            <label for="img-addproduct">Imagen:</label>
-            <input type="text" id="img-addproduct" name="img-product" required>
+            <label for="img-addproduct">Thumbnail:</label>
+            <input type="text" id="img-addproduct" name="img-product" >
         </li>
         <li>
-            <label for="description-addproduct">Descripción:</label>
+            <label for="description-addproduct">Descriptión:</label>
             <input type="text" id="description-addproduct" name="description-product" required>
         </li>
         <li>
-            <label for="price-addproduct">Precio:</label>
+            <label for="price-addproduct">Price:</label>
             <input type="text" id="price-addproduct" name="price-product" required>
         </li>
         
@@ -26,11 +26,15 @@
         </li>
         <li>
             <label for="category-addproduct">Category:</label>
-            <input type="text" id="code-addproduct" name="category-product" required>
+            <input type="text" id="category-addproduct" name="category-product" required>
         </li>
         <li>
             <label for="code-addproduct">Code:</label>
             <input type="text" id="code-addproduct" name="code-product" required>
+        </li>
+        <li>
+            <label for="code-addproduct">Status:</label>
+            <input type="text" id="status-addproduct" name="code-product" value="true" disabled>
         </li>
         <button type="submit" id="button-add-product">Add product</button>
     </ul>
@@ -50,3 +54,4 @@
 
 
 
+ 
