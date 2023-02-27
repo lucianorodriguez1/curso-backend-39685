@@ -18,7 +18,6 @@ form.addEventListener("submit", (e)=>{
    const stock = document.getElementById("stock-addproduct").value;
    const category = document.getElementById("category-addproduct").value;
    const code = document.getElementById("code-addproduct").value;
-//    const status = document.getElementById("status-addproduct").value;
 
    const product={title, thumbnail, description,price,stock,category,code}
    socket.emit("addProduct-socket", product)
@@ -39,17 +38,28 @@ socket.on("getProducts-socket", products=>{
         <div class="card-home">
             <img src="img/1050ti.jfif">
             <h5>${product.title}</h5>
-            <p>ID:${product.id}</p>
+            <p id="id-prod">ID:${product.id}</p>
             <p>Description: ${product.description}</p>
             <p>Precio: ${product.price}</p>     
             <p>Stock: ${product.stock}</p>
             <p>Code: ${product.code}</p>
             <p>Category: ${product.category}</p>
             <p>Status: ${product.status}</p>
-            <button type="submit" id="button-delete-product">Borrar</button>
+            <button type="submit" id="button-delete-product${product.id}">Borrar</button>
         </div> 
         `
+      
+    })
 
+
+    products.forEach(product=>{
+        const buttonDelete = document.getElementById(`button-delete-product${product.id}`);
+        buttonDelete.addEventListener("click", ()=>{
+            socket.emit("deleteProduct", product.id)
+            socket.on("mensajeProductoEliminado",mensaje=>{
+                console.log(mensaje) 
+            })
+        }) 
     })
 })
 
@@ -60,7 +70,4 @@ socket.on("getProducts-socket", products=>{
 
 
 
-
-
-// borrar el producto
 

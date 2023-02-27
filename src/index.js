@@ -82,6 +82,17 @@ io.on("connection", async socket=>{
 
     })
 
+
+    socket.on("deleteProduct", async id=>{
+    
+        let mensajeBorrar = await productManager.deleteProduct(id)
+        socket.emit("mensajeProductoEliminado", mensajeBorrar)
+        console.log(mensajeBorrar);
+        socket.emit("getProducts-socket", await productManager.getProducts())
+
+    })
+
+
     socket.emit("getProducts-socket", await productManager.getProducts())
   
 })
