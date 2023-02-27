@@ -78,6 +78,8 @@ io.on("connection", async socket=>{
         let mensajeAgregar = await productManager.addProduct(newProduct)
         io.emit("mensajeproductoadd", mensajeAgregar)
         console.log(mensajeAgregar);
+        socket.emit("getProducts-socket", await productManager.getProducts())
+
     })
 
     socket.emit("getProducts-socket", await productManager.getProducts())
